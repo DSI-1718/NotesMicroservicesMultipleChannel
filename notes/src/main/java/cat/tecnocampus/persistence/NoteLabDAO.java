@@ -1,14 +1,10 @@
 package cat.tecnocampus.persistence;
 
 import cat.tecnocampus.domain.NoteLab;
-import cat.tecnocampus.domain.UserLab;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -28,10 +24,11 @@ public class NoteLabDAO {
     private final String UPDATE_NOTE = "update note_lab set title = ?, content = ?, date_edit = ? where date_creation = ? and title = ? and owner = ?";
     private final String DELETE_NOTE = "delete note_lab where title = ? and date_creation = ?";
     private final String EXISTS_NOTE = "select count(*) from note_lab where title = ? and date_creation = ?";
+    private final String DELETE_USER_NOTES = "delete note_lab where owner = ?";
 
     private RowMapper<NoteLab> mapper = (resultSet, i) -> {
         NoteLab noteLab = new NoteLab.NoteLabBuilder(resultSet.getString("title"), resultSet.getString("content"),
-                                                     resultSet.getNString("userName"))
+                                                     resultSet.getNString("owner"))
                 .dateCreation(resultSet.getTimestamp("date_creation").toLocalDateTime())
                 .dateEdit(resultSet.getTimestamp("date_edit").toLocalDateTime())
                 .build();
@@ -67,6 +64,10 @@ public class NoteLabDAO {
 
     public int deleteNote(NoteLab note) {
         return jdbcTemplate.update(DELETE_NOTE, note.getTitle(), note.getDateCreation());
+    }
+
+    public int deleteUserNotes(String userName) {
+        return jdbcTemplate.update(DELETE_USER_NOTES, userName);
     }
 
     public boolean existsNote(NoteLab note) {
