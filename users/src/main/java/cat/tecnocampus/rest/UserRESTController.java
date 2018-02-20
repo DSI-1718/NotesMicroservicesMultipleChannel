@@ -17,17 +17,17 @@ public class UserRESTController {
         this.userUseCases = userUseCases;
     }
 
-    @GetMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserLab> listUsers() {
         return userUseCases.getUsers();
     }
 
-    @GetMapping(value = "users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserLab showUser(@PathVariable String username) {
         return userUseCases.getUser(username);
     }
 
-    @PostMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserLab createUser(@RequestBody @Valid UserLab user) {
 
         userUseCases.registerUser(user);

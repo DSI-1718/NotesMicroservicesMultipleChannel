@@ -24,6 +24,12 @@ public class NotesRESTController {
         return noteLabs;
     }
 
+    @GetMapping(value = "/notes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<NoteLab> getAllNotes() {
+        List<NoteLab> noteLabs = noteUseCases.getAllNotes();
+        return noteLabs;
+    }
+
     @PostMapping(value = "/notes", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteLab createNote(@RequestBody @Valid NoteLab note) {
         noteUseCases.createNote(note);
@@ -31,7 +37,7 @@ public class NotesRESTController {
         return note;
     }
 
-    @DeleteMapping(value = "notes/{username}")
+    @DeleteMapping(value = "/notes/{username}")
     public int deleteUserNotes(@PathVariable String username) {
         return noteUseCases.deleteUserNotes(username);
     }
