@@ -1,8 +1,10 @@
 package cat.tecnocampus.rest;
 
+import cat.tecnocampus.configuration.NotesConfiguration;
 import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domainController.NoteUseCases;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/")
+@RibbonClient(name = "users", configuration = NotesConfiguration.class)
 public class NotesRESTController {
     private NoteUseCases noteUseCases;
     private RestTemplate restTemplate;
@@ -41,7 +44,7 @@ public class NotesRESTController {
     @PostMapping(value = "/notes", produces = MediaType.APPLICATION_JSON_VALUE)
     @HystrixCommand(fallbackMethod = "saveUncheckedNote")
     public NoteLab createNote(@RequestBody @Valid NoteLab note) {
-        String userExists = restTemplate.getForObject("http://localhost:8090/api/users/exists/" + note.getUserName(), String.class);
+        String userExists = restTemplate.getForObject("http://users/api/users/exists/" + note.getUserName(), String.class);
 
         if (userExists.equals(FALSE))
             throw new UserDoesNotExistException();

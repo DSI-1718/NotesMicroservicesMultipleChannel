@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/")
 public class UserRESTController {
     private UserUseCases userUseCases;
 
@@ -17,26 +16,31 @@ public class UserRESTController {
         this.userUseCases = userUseCases;
     }
 
-    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserLab> listUsers() {
         return userUseCases.getUsers();
     }
 
-    @GetMapping(value = "/users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserLab showUser(@PathVariable String username) {
         return userUseCases.getUser(username);
     }
 
-    @GetMapping(value = "/users/exists/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/users/exists/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean existsUser(@PathVariable String username) {
         return userUseCases.userExists(username);
     }
 
-    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserLab createUser(@RequestBody @Valid UserLab user) {
 
         userUseCases.registerUser(user);
 
         return user;
+    }
+
+    @GetMapping(value = "/")
+    public String ribbonConnect() {
+        return "Ribbon connect";
     }
 }
