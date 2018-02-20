@@ -15,12 +15,10 @@ import java.util.List;
 public class NoteLabDAO {
     private JdbcTemplate jdbcTemplate;
 
-    private final String INSERT_NOTE = "insert into note_lab (title, content, date_creation, date_edit, owner) values(?, ?, ?, ?, ?)";
+    private final String INSERT_NOTE = "insert into note_lab (title, content, date_creation, date_edit, owner, checked) values(?, ?, ?, ?, ?, ?)";
     private final String FIND_ALL = "select * from note_lab";
     private final String FIND_BY_USERNAME = "select * from note_lab where owner = ? order by date_edit desc";
-    private final String FIND_BY_TITLE = "select * from note_lab where title = ?";
     private final String FIND_BY_ID = "select * from note_lab where id = ?";
-    private final String INSERT_USER_NOTES = "INSERT INTO note_lab (title, content, date_creation, date_edit, owner) values(?, ?, ?, ?, ?)";
     private final String UPDATE_NOTE = "update note_lab set title = ?, content = ?, date_edit = ? where date_creation = ? and title = ? and owner = ?";
     private final String DELETE_NOTE = "delete note_lab where title = ? and date_creation = ?";
     private final String EXISTS_NOTE = "select count(*) from note_lab where title = ? and date_creation = ?";
@@ -31,6 +29,7 @@ public class NoteLabDAO {
                                                      resultSet.getNString("owner"))
                 .dateCreation(resultSet.getTimestamp("date_creation").toLocalDateTime())
                 .dateEdit(resultSet.getTimestamp("date_edit").toLocalDateTime())
+                .checked(resultSet.getBoolean("checked"))
                 .build();
         return noteLab;
     };
@@ -54,7 +53,7 @@ public class NoteLabDAO {
 
     public int insert(NoteLab noteLab) {
         return jdbcTemplate.update(INSERT_NOTE, noteLab.getTitle(), noteLab.getContent(), Timestamp.valueOf(noteLab.getDateCreation()),
-                Timestamp.valueOf(noteLab.getDateEdit()), noteLab.getUserName());
+                Timestamp.valueOf(noteLab.getDateEdit()), noteLab.getUserName(), noteLab.isChecked());
     }
 
     public int updateNote(String oldTitle, NoteLab note) {

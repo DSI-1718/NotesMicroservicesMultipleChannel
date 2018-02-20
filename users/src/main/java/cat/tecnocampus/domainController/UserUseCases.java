@@ -48,4 +48,8 @@ public class UserUseCases {
         return userLabDAO.findByUsername(userName);
     }
 
+    public boolean userExists(String username) {
+        return userLabDAO.existsUser(username);
+    }
+
 }

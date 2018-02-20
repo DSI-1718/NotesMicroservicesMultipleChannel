@@ -27,6 +27,11 @@ public class UserRESTController {
         return userUseCases.getUser(username);
     }
 
+    @GetMapping(value = "/users/exists/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean existsUser(@PathVariable String username) {
+        return userUseCases.userExists(username);
+    }
+
     @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserLab createUser(@RequestBody @Valid UserLab user) {
 

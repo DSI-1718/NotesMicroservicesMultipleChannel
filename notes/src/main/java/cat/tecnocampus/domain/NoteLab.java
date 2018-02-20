@@ -1,6 +1,7 @@
 package cat.tecnocampus.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -22,6 +23,9 @@ public class NoteLab {
 
     private String userName;
 
+    //@JsonIgnore
+    private boolean checked;
+
     public NoteLab() {
     }
 
@@ -31,6 +35,7 @@ public class NoteLab {
         userName = builder.userName;
         dateCreation = builder.dateCreation;
         dateEdit = builder.dateEdit;
+        checked = builder.checked;
     }
 
     public String getTitle() {
@@ -77,18 +82,28 @@ public class NoteLab {
         return "NoteLab: "+this.title+", Content: "+ this.content;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     public static class NoteLabBuilder {
         private final String title;
         private final String content;
         private final String userName;
+        private boolean checked;
 
         private LocalDateTime dateCreation;
         private LocalDateTime dateEdit;
 
-        public NoteLabBuilder(String title, String contennt, String userName) {
+        public NoteLabBuilder(String title, String content, String userName) {
             this.title = title;
-            this.content = contennt;
+            this.content = content;
             this.userName = userName;
+            this.checked = false;
         }
 
         public NoteLabBuilder dateCreation(LocalDateTime dateCreation) {
@@ -99,6 +114,11 @@ public class NoteLab {
         public NoteLabBuilder dateEdit(LocalDateTime dateEdit) {
             this.dateEdit = dateEdit;
             return this;
+        }
+
+        public NoteLabBuilder checked(boolean checked) {
+            this.checked = checked;
+            return  this;
         }
 
         public NoteLab build() {

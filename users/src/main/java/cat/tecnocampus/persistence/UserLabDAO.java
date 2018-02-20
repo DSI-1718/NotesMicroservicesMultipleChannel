@@ -20,6 +20,7 @@ public class UserLabDAO {
     private final String FIND_ALL = "Select * from user_lab";
     private final String FIND_BY_USERNAME = "Select * from user_lab where username = ?";
     private final String DELETE = "delete from user_lab where username = ?";
+    private final String USER_EXISTS = "select count(*) from user_lab where username = ?";
 
     private UserLab userMapper(ResultSet resultSet) throws SQLException {
         UserLab userLab = new UserLab.UserLabBuilder(resultSet.getString("username"), resultSet.getString("email"))
@@ -54,5 +55,10 @@ public class UserLabDAO {
 
     public int delete(String username) {
         return jdbcTemplate.update(DELETE, username);
+    }
+
+    public boolean existsUser(String username) {
+        Integer cnt = jdbcTemplate.queryForObject(USER_EXISTS, Integer.class, username);
+        return cnt != null && cnt > 0;
     }
 }
