@@ -39,6 +39,8 @@ public class UserRESTController {
         return user;
     }
 
+    @DeleteMapping(value = "/api/users/")
+
     @GetMapping(value = "/")
     public String ribbonConnect() {
         return "Ribbon connect";
