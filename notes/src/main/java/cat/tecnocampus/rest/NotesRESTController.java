@@ -3,6 +3,7 @@ package cat.tecnocampus.rest;
 import cat.tecnocampus.configuration.NotesConfiguration;
 import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domainController.NoteUseCases;
+import cat.tecnocampus.messageSourceSink.MessageSource;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,14 @@ import java.util.List;
 public class NotesRESTController {
     private NoteUseCases noteUseCases;
     private RestTemplate restTemplate;
+    private MessageSource messageSource;
 
     private final String FALSE = "false";
 
-    public NotesRESTController(NoteUseCases noteUseCases, RestTemplate restTemplate) {
+    public NotesRESTController(NoteUseCases noteUseCases, RestTemplate restTemplate, MessageSource messageSource) {
         this.noteUseCases = noteUseCases;
         this.restTemplate = restTemplate;
+        this.messageSource = messageSource;
     }
 
 
@@ -57,6 +60,7 @@ public class NotesRESTController {
     public NoteLab saveUncheckedNote(NoteLab note) {
         note.setChecked(false);
         noteUseCases.createNote(note);
+        messageSource.sendQuestionExists(note.getUserName());
 
         return note;
     }

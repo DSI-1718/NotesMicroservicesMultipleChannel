@@ -48,9 +48,12 @@ public class NoteUseCases {
         return noteLabDAO.findByUsername(userName);
     }
 
-
     public List<NoteLab> getAllNotes() {
         return noteLabDAO.findAll();
+    }
+
+    public int updateNoteExists(String userName) {
+        return noteLabDAO.updateNoteExists(userName);
     }
 
 

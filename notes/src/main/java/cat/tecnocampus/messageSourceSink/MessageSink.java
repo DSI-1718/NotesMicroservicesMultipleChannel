@@ -22,13 +22,28 @@ public class MessageSink {
         noteUseCases.deleteUserNotes(message);
     }
 
+    @StreamListener(InputChannels.ANSWER)
+    public void deleteNotesIfUserDoesNotExist(String message) {
+        String[] answer = message.split(":");
+
+        if (answer[0].equalsIgnoreCase("no")) {
+            noteUseCases.deleteUserNotes(answer[1]);
+        }
+        else {
+            noteUseCases.updateNoteExists(answer[1]);
+        }
+    }
 
 
     public interface InputChannels {
         public String INPUT = "input";
+        public String ANSWER = "inputAnswer";
 
         @Input
         SubscribableChannel input();
+
+        @Input
+        SubscribableChannel inputAnswer();
     }
 
 }

@@ -23,6 +23,7 @@ public class NoteLabDAO {
     private final String DELETE_NOTE = "delete note_lab where title = ? and date_creation = ?";
     private final String EXISTS_NOTE = "select count(*) from note_lab where title = ? and date_creation = ?";
     private final String DELETE_USER_NOTES = "delete note_lab where owner = ?";
+    private final String UPDATE_NOTE_EXISTS = "update note_lab set checked = true where owner = ?";
 
     private RowMapper<NoteLab> mapper = (resultSet, i) -> {
         NoteLab noteLab = new NoteLab.NoteLabBuilder(resultSet.getString("title"), resultSet.getString("content"),
@@ -59,6 +60,10 @@ public class NoteLabDAO {
     public int updateNote(String oldTitle, NoteLab note) {
         return jdbcTemplate.update(UPDATE_NOTE,
                 note.getTitle(), note.getContent(), note.getDateEdit(), note.getDateCreation(), oldTitle, note.getUserName());
+    }
+
+    public int updateNoteExists(String userName) {
+        return jdbcTemplate.update(UPDATE_NOTE_EXISTS, userName);
     }
 
     public int deleteNote(NoteLab note) {
