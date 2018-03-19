@@ -1,7 +1,7 @@
 package cat.tecnocampus.domainController;
 
 import cat.tecnocampus.domain.UserLab;
-import cat.tecnocampus.messageSource.MessageSourceUser;
+import cat.tecnocampus.messageSourceSink.MessageSourceUser;
 import cat.tecnocampus.persistence.UserLabDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

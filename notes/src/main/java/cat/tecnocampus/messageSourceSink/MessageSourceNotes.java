@@ -7,8 +7,8 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 
-@EnableBinding(MessageSource.OutputChannel.class)
-public class MessageSource {
+@EnableBinding(MessageSourceNotes.OutputChannel.class)
+public class MessageSourceNotes {
 
     private MessageChannel notesOutputChannel;
 
