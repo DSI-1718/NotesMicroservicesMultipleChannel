@@ -7,12 +7,12 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.SubscribableChannel;
 
-@EnableBinding(MessageSink.InputChannels.class)
-public class MessageSink {
+@EnableBinding(MessageSinkNotes.InputChannels.class)
+public class MessageSinkNotes {
     private NoteUseCases noteUseCases;
 
     @Autowired
-    public MessageSink(NoteUseCases noteUseCases) {
+    public MessageSinkNotes(NoteUseCases noteUseCases) {
         this.noteUseCases = noteUseCases;
     }
 
@@ -25,7 +25,7 @@ public class MessageSink {
     @StreamListener(InputChannels.ANSWER)
     public void deleteNotesIfUserDoesNotExist(String message) {
         String[] answer = message.split(":");
-
+        
         if (answer[0].equalsIgnoreCase("no")) {
             noteUseCases.deleteUserNotes(answer[1]);
         }

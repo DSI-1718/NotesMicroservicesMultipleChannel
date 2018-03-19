@@ -1,7 +1,7 @@
 package cat.tecnocampus.domainController;
 
 import cat.tecnocampus.domain.UserLab;
-import cat.tecnocampus.messageSourceSink.MessageSourceUser;
+import cat.tecnocampus.messageSourceSink.MessageSourceDeleteNote;
 import cat.tecnocampus.persistence.UserLabDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +17,11 @@ import java.util.List;
 public class UserUseCases {
 
     private final UserLabDAO userLabDAO;
-    private final MessageSourceUser messageSourceUser;
+    private final MessageSourceDeleteNote messageSourceDeleteNote;
 
-    public UserUseCases(UserLabDAO UserLabDAO, MessageSourceUser messageSourceUser) {
+    public UserUseCases(UserLabDAO UserLabDAO, MessageSourceDeleteNote messageSourceDeleteNote) {
         this.userLabDAO = UserLabDAO;
-        this.messageSourceUser = messageSourceUser;
+        this.messageSourceDeleteNote = messageSourceDeleteNote;
     }
 
     public UserLab createUser(String username, String name, String secondName, String email) {
@@ -40,7 +40,7 @@ public class UserUseCases {
     public int deleteUser(String username) {
         int result = userLabDAO.delete(username);
         if (result > 0)
-            messageSourceUser.deleteUserNotes(username);
+            messageSourceDeleteNote.deleteUserNotes(username);
         return result;
     }
 
