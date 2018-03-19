@@ -45,7 +45,7 @@ public class NotesRESTController {
     }
 
     @PostMapping(value = "/notes", produces = MediaType.APPLICATION_JSON_VALUE)
-    @HystrixCommand(fallbackMethod = "saveUncheckedNote")
+    @HystrixCommand(fallbackMethod = "saveUncheckedNote", ignoreExceptions = {UserDoesNotExistException.class})
     public NoteLab createNote(@RequestBody @Valid NoteLab note) {
         String userExists = restTemplate.getForObject("http://users/api/users/exists/" + note.getUserName(), String.class);
 
