@@ -26,6 +26,34 @@ de la comprovació. El canal es pot anomenar *answer* per exemple.
 * Quan **notes** reb el missatge amb el resultat de la comprovació, esborrarà els missatges si l'usuari no existeix o marcarà
 la nota com a checked si l'usuari existeix. A NoteUseCases trobareu el mètode *updateNoteExists(String userName)* que ho fa.
 
+## Crides als microserveis
+
+### Crear nota
+http://localhost:8080/notes/api/notes
+**Action:** POST
+**Headers:** Content-Type=application/json
+**body:** 
+```json
+{
+"title": "Examen DSI",
+"content": "Aquest examen està xupat",
+"dateCreation": "2018-02-20 15:19:50",
+"dateEdit": "2018-02-20 15:19:50",
+"userName": "castells"
+}
+```
+
+### Esborrar Usuari
+http://localhost:8080/users/api/users/castells
+**Action:** DELETE
+
+### Llistar tots els usuaris
+http://localhost:8080/users/api/users/
+**Action:** GET
+
+### Llistar totes les notes
+http://localhost:8080/notes/api/notes/
+**Action:** GET
 
 ## Referències per enviar i rebre missatges per més d'un canal
 * Tutorial: http://www.baeldung.com/spring-cloud-stream especialment l'apartat 4
