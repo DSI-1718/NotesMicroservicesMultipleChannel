@@ -29,10 +29,10 @@ la nota com a checked si l'usuari existeix. A NoteUseCases trobareu el mètode *
 ## Crides als microserveis
 
 ### Crear nota
-http://localhost:8080/notes/api/notes
-**Action:** POST
-**Headers:** Content-Type=application/json
-**body:** 
+* http://localhost:8080/notes/api/notes
+* **Action:** POST
+* **Headers:** Content-Type=application/json
+* **body:** 
 ```json
 {
 "title": "Examen DSI",
@@ -44,16 +44,16 @@ http://localhost:8080/notes/api/notes
 ```
 
 ### Esborrar Usuari
-http://localhost:8080/users/api/users/castells
-**Action:** DELETE
+* http://localhost:8080/users/api/users/castells
+* **Action:** DELETE
 
 ### Llistar tots els usuaris
-http://localhost:8080/users/api/users/
-**Action:** GET
+* http://localhost:8080/users/api/users/
+* **Action:** GET
 
 ### Llistar totes les notes
-http://localhost:8080/notes/api/notes/
-**Action:** GET
+* http://localhost:8080/notes/api/notes/
+* **Action:** GET
 
 ## Referències per enviar i rebre missatges per més d'un canal
 * Tutorial: http://www.baeldung.com/spring-cloud-stream especialment l'apartat 4
